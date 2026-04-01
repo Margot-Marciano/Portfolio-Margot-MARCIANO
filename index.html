@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Portfolio Margot Marciano</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,700&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background-color: #e8e4df;
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* ── Navigation — couleurs originales ── */
+        nav.nav-hero {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 22px 40px;
+            background-color: #c4b8b0;
+            border-bottom: 2px solid #7a1f2b;
+            position: relative;
+            z-index: 10;
+        }
+
+        nav.nav-hero ul {
+            display: flex;
+            gap: 0;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav.nav-hero ul li {
+            margin-left: 35px;
+        }
+
+        nav.nav-hero ul li a {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            color: #4a2c2c;
+            transition: color 0.2s ease;
+        }
+
+        nav.nav-hero ul li a:hover {
+            color: #7a1f2b;
+            text-decoration: underline;
+        }
+
+        /* ── Hero : centré avec max-width ── */
+        .hero-magazine {
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-start;
+            gap: 48px;
+            padding: 72px 40px 72px 40px;
+            min-height: calc(100vh - 70px);
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        /* ── Photo col ── */
+        .hero-photo-side {
+            flex-shrink: 0;
+        }
+
+        .hero-photo-frame {
+            position: relative;
+            width: 280px;
+            height: 350px;
+        }
+
+        .hero-photo-frame img {
+            display: block;
+            width: 280px;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
+            border: none;
+            border-radius: 4px;
+            box-shadow: none;
+        }
+
+        /* Bordure supprimée */
+        .hero-photo-frame .frame-border {
+            display: none;
+        }
+
+        .hero-photo-caption {
+            margin-top: 12px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.82rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: #7a1f2b;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* ── Content col ── */
+        .hero-content {
+            flex: 1;
+            min-width: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Filigrane M */
+        .hero-content::before {
+            content: 'M';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18rem;
+            font-weight: 700;
+            font-style: italic;
+            color: rgba(122, 31, 43, 0.055);
+            position: absolute;
+            top: -50px;
+            right: -20px;
+            line-height: 1;
+            pointer-events: none;
+            z-index: 0;
+            user-select: none;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-eyebrow {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.67rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #7a1f2b;
+            font-weight: 700;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .hero-inner h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 600;
+            color: #4a2c2c;
+            line-height: 0.93;
+            letter-spacing: 0.01em;
+            margin-bottom: 6px;
+        }
+
+        .hero-inner h1 em {
+            font-style: italic;
+            font-weight: 300;
+            color: #7a1f2b;
+            display: block;
+            font-size: 4.4rem;
+        }
+
+        .hero-sous-titre {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.74rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #9a8080;
+            font-weight: 500;
+            margin: 20px 0;
+        }
+
+        .hero-sep {
+            width: 40px;
+            height: 2px;
+            background-color: #7a1f2b;
+            border: none;
+            margin: 0 0 22px;
+            opacity: 0.55;
+        }
+
+        .hero-tools {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-bottom: 26px;
+        }
+
+        .hero-tool {
+            padding: 3px 12px;
+            border: 1px solid #c4b8b0;
+            border-radius: 20px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.71rem;
+            color: #7a1f2b;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            background: #f5f0ed;
+        }
+
+        .hero-inner p.hero-desc {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.93rem;
+            line-height: 1.8;
+            color: #5a3535;
+            margin-bottom: 32px;
+            font-weight: 400;
+        }
+
+        .hero-inner p.hero-desc strong {
+            color: #7a1f2b;
+            font-weight: 600;
+        }
+
+        .hero-badge-mag {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            border: 1.5px solid #7a1f2b;
+            border-radius: 40px;
+            padding: 9px 20px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.8rem;
+            color: #7a1f2b;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+            width: fit-content;
+            background: transparent;
+        }
+
+        .hero-badge-mag .badge-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #7a1f2b;
+            border-radius: 50%;
+            flex-shrink: 0;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        .hero-badge-mag .badge-sep {
+            color: #c4b8b0;
+            font-weight: 300;
+            font-size: 1.3rem;
+            line-height: 1;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50%       { opacity: 0.2; transform: scale(0.65); }
+        }
+
+        /* ── Animations d'entrée ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to   { opacity: 1; }
+        }
+
+        .hero-photo-side  { animation: fadeIn  0.9s ease 0.05s both; }
+        .hero-eyebrow     { animation: fadeUp 0.65s ease 0.20s both; }
+        .hero-inner h1    { animation: fadeUp 0.65s ease 0.32s both; }
+        .hero-sous-titre  { animation: fadeUp 0.65s ease 0.42s both; }
+        .hero-sep         { animation: fadeUp 0.65s ease 0.48s both; }
+        .hero-tools       { animation: fadeUp 0.65s ease 0.55s both; }
+        .hero-desc        { animation: fadeUp 0.65s ease 0.63s both; }
+        .hero-badge-mag   { animation: fadeUp 0.65s ease 0.72s both; }
+
+        /* ── Responsive ── */
+        @media (max-width: 780px) {
+            nav.nav-hero {
+                padding: 16px 24px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            nav.nav-hero ul { flex-wrap: wrap; justify-content: center; }
+            nav.nav-hero ul li { margin: 4px 12px; }
+
+            .hero-magazine {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 44px;
+                padding: 44px 24px 56px;
+            }
+
+            .hero-photo-frame { width: 200px; height: 250px; }
+            .hero-photo-frame img { width: 200px; height: 250px; }
+            .hero-inner h1    { font-size: 3rem; }
+            .hero-inner h1 em { font-size: 3.4rem; }
+            .hero-content::before { font-size: 12rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="nav-hero">
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="competences.html">Compétences</a></li>
+            <li><a href="projets.html">Projets</a></li>
+            <li><a href="experiences.html">Expériences</a></li>
+            <li><a href="engagement.html">Engagement</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero-magazine">
+
+        <!-- Photo à gauche, encadrée sans débordement -->
+        <div class="hero-photo-side">
+            <div class="hero-photo-frame">
+                <div class="frame-border"></div>
+                <img src="images/projets/photo_profil.jpg" alt="Photo de Margot Marciano">
+            </div>
+            <p class="hero-photo-caption">Data · Actuariat</p>
+        </div>
+
+        <!-- Contenu à droite -->
+        <div class="hero-content">
+            <div class="hero-inner">
+
+                <h1>Margot<em>Marciano</em></h1>
+
+                <p class="hero-sous-titre">BUT Science des Données &nbsp;·&nbsp; IUT Paris Cité</p>
+
+                <hr class="hero-sep">
+
+                <div class="hero-tools">
+                    <span class="hero-tool">Python</span>
+                    <span class="hero-tool">R</span>
+                    <span class="hero-tool">SAS</span>
+                    <span class="hero-tool">Power BI</span>
+                </div>
+
+                <p class="hero-desc">
+                    Passionnée par l'analyse statistique et la modélisation, je construis des projets concrets mêlant traitement de données, visualisation et interprétation de résultats.<br><br>
+                    Mon ambition est de m'orienter vers l'<strong>actuariat</strong> — un secteur où la rigueur mathématique et l'analyse des risques sont au cœur des enjeux.
+                </p>
+
+                <div class="hero-badge-mag">
+                    <span class="badge-dot"></span>
+                    <span style="font-weight:700;">Recherche d'alternance</span>
+                    <span class="badge-sep">&nbsp;·&nbsp;</span>
+                    Actuariat &amp; analyse des risques
+                    <span class="badge-sep">&nbsp;·&nbsp;</span>
+                    Septembre 2026
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+<script>
+    function adjustPhoto() {
+        const h1      = document.querySelector('.hero-inner h1');
+        const desc    = document.querySelector('.hero-desc');
+        const badge   = document.querySelector('.hero-badge-mag');
+        const caption = document.querySelector('.hero-photo-caption');
+        const frame   = document.querySelector('.hero-photo-frame');
+        const side    = document.querySelector('.hero-photo-side');
+        if (!h1 || !desc || !frame || !side) return;
+
+        // En mobile (layout en colonne), on annule les ajustements "magazine"
+        // qui sont calculés pour la mise en page desktop.
+        if (window.matchMedia('(max-width: 780px)').matches) {
+            side.style.paddingTop = '';
+            frame.style.height = '';
+            if (caption) caption.style.marginTop = '';
+            return;
+        }
+
+        const sideRect = side.getBoundingClientRect();
+        const h1Top    = h1.getBoundingClientRect().top    - sideRect.top;
+        const descBot  = desc.getBoundingClientRect().bottom - sideRect.top;
+
+        side.style.paddingTop = h1Top + 'px';
+        frame.style.height    = (descBot - h1Top) + 'px';
+
+        // Caption alignée avec le badge
+        if (caption && badge) {
+            const badgeMid  = badge.getBoundingClientRect().top + badge.getBoundingClientRect().height / 2 - sideRect.top;
+            const capH      = caption.getBoundingClientRect().height;
+            caption.style.marginTop = (badgeMid - descBot - capH / 2) + 'px';
+        }
+    }
+    window.addEventListener('load', adjustPhoto);
+    window.addEventListener('resize', adjustPhoto);
+</script>
+</body>
+</html>

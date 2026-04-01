@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Projets - Portfolio Margot Marciano</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* =====================================================
+           VARIABLES — cohérentes avec style.css du site
+        ===================================================== */
+        :root {
+            --sand:    #e8e4df;
+            --cream:   #f5f0ed;
+            --light:   #faf8f6;
+            --border:  #d8cfc9;
+            --muted:   #c4b8b0;
+            --text:    #4a2c2c;
+            --sub:     #5a3535;
+            --accent:  #7a1f2b;
+            --accent2: #5a1520;
+            --shadow-sm: 0 2px 12px rgba(74,44,44,.07);
+            --shadow-md: 0 12px 40px rgba(74,44,44,.13);
+            --shadow-lg: 0 28px 80px rgba(74,44,44,.22);
+            --radius-card: 16px;
+            --radius-modal: 20px;
+            --transition: .28s cubic-bezier(.22,1,.36,1);
+        }
+
+        /* =====================================================
+           PAGE LAYOUT
+        ===================================================== */
+        .section-projets {
+            max-width: 950px;
+            padding: 55px 40px 70px;
+        }
+
+        .page-header {
+            margin-bottom: 72px;
+            padding-bottom: 32px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .page-header h1 {
+            margin-bottom: 0;
+            color: var(--text);
+        }
+
+        .page-header .hint {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-style: normal;
+            white-space: nowrap;
+        }
+
+        /* =====================================================
+           CATEGORY — sous-titres restructurés et impactants
+        ===================================================== */
+        .categorie {
+            margin-bottom: 80px;
+        }
+
+        .categorie:last-child {
+            margin-bottom: 0;
+        }
+
+        /* En-tête de catégorie repensé */
+        .cat-header {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            margin-bottom: 40px;
+        }
+
+        /* Trait vertical bordeaux à gauche */
+        .cat-header::before {
+            content: '';
+            display: block;
+            width: 3px;
+            height: 44px;
+            background-color: var(--accent);
+            border-radius: 2px;
+            flex-shrink: 0;
+            margin-right: 20px;
+        }
+
+        /* Bloc texte du sous-titre */
+        .cat-header-text {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            flex: 1;
+        }
+
+        .cat-label {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.9rem;
+            font-weight: 600;
+            letter-spacing: 0.01em;
+            color: var(--text);
+            line-height: 1.1;
+            white-space: nowrap;
+        }
+
+        /* Compteur de projets sous le label */
+        .cat-count {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--accent);
+            opacity: 0.7;
+        }
+
+        .cat-rule {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, var(--border) 0%, transparent 100%);
+            margin-left: 24px;
+        }
+
+        /* =====================================================
+           CARD GRID
+        ===================================================== */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        /* =====================================================
+           PROJECT CARD — full-image with overlay
+        ===================================================== */
+        .proj-card {
+            position: relative;
+            border-radius: var(--radius-card);
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 4/3;
+            background: var(--border);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(196, 184, 176, 0.4);
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+
+        .proj-card:hover {
+            transform: translateY(-6px) scale(1.008);
+            box-shadow: var(--shadow-md);
+            border-color: rgba(122, 31, 43, 0.18);
+        }
+
+        /* Image fills card entirely */
+        .proj-card-img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border: none;
+            border-radius: 0;
+            transition: transform .55s cubic-bezier(.22,1,.36,1), filter .55s ease;
+            filter: brightness(.9) saturate(.85);
+        }
+
+        .proj-card:hover .proj-card-img {
+            transform: scale(1.07);
+            filter: brightness(.75) saturate(.7);
+        }
+
+        /* Placeholder for missing images */
+        .proj-card-placeholder {
+            position: absolute;
+            inset: 0;
+            display: block;
+            background: linear-gradient(135deg, #e4ddd8 0%, #d4ccc6 100%);
+            transition: filter .4s ease;
+        }
+
+        .proj-card:hover .proj-card-placeholder {
+            filter: brightness(.85);
+        }
+
+        /* Gradient overlay at bottom */
+        .proj-card-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                to top,
+                rgba(20, 8, 8, .82) 0%,
+                rgba(20, 8, 8, .35) 45%,
+                transparent 72%
+            );
+            transition: opacity var(--transition);
+        }
+
+        /* Bottom text block */
+        .proj-card-body {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 22px 22px 20px;
+            transform: translateY(0);
+            transition: transform var(--transition);
+        }
+
+        .proj-card-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.08rem;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.35;
+            margin: 0 0 10px;
+            letter-spacing: .01em;
+        }
+
+        /* Tags — hidden by default, revealed on hover */
+        .proj-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity var(--transition), transform var(--transition);
+        }
+
+        .proj-card:hover .proj-card-tags {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .proj-card .tag {
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.3);
+            color: rgba(255,255,255,.92);
+            font-size: 0.7rem;
+            padding: 2px 9px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Subtle "click" cue — top-right corner */
+        .proj-card-cue {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.28);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,.85);
+            opacity: 0;
+            transform: scale(.8);
+            transition: opacity var(--transition), transform var(--transition);
+        }
+
+        .proj-card:hover .proj-card-cue {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* =====================================================
+           MODAL — no image, text only
+        ===================================================== */
+        .modal-wrap {
+            position: fixed;
+            inset: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .3s ease, visibility .3s ease;
+        }
+
+        .modal-wrap.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Backdrop */
+        .modal-backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(74, 44, 44, .48);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+        }
+
+        /* Box */
+        .modal-box {
+            position: relative;
+            z-index: 1;
+            background: var(--light);
+            border-radius: var(--radius-modal);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+            max-width: 560px;
+            width: 100%;
+            max-height: 88vh;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--muted) transparent;
+            transform: translateY(24px) scale(.97);
+            transition: transform .34s cubic-bezier(.22,1,.36,1);
+            padding: 44px 44px 48px;
+        }
+
+        .modal-wrap.open .modal-box {
+            transform: translateY(0) scale(1);
+        }
+
+        /* Close button */
+        .modal-close {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            width: 34px;
+            height: 34px;
+            border: 1px solid var(--border);
+            background: var(--cream);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            color: var(--sub);
+            transition: background .2s, transform .2s, border-color .2s;
+        }
+
+        .modal-close:hover {
+            background: var(--sand);
+            border-color: var(--muted);
+            transform: scale(1.08);
+        }
+
+        /* Category chip above title */
+        .modal-cat {
+            display: inline-block;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.67rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--accent);
+            background-color: #f0e8e5;
+            border: 1px solid rgba(196, 184, 176, 0.6);
+            border-radius: 4px;
+            padding: 3px 10px;
+            margin-bottom: 18px;
+        }
+
+        .modal-title {
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.25;
+            margin: 0 0 18px;
+            letter-spacing: .01em;
+        }
+
+        /* Tags row */
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 34px;
+        }
+
+        /* Divider */
+        .modal-divider {
+            width: 100%;
+            height: 1px;
+            background: var(--border);
+            margin: 0 0 28px;
+        }
+
+        /* Content sections */
+        .modal-section {
+            margin-bottom: 26px;
+        }
+
+        .modal-section:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .modal-section-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .modal-section-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.82rem;
+            flex-shrink: 0;
+            background: #f0e8e5;
+        }
+
+        .modal-section.resultats .modal-section-icon {
+            background: var(--accent);
+        }
+
+        .modal-section-label {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin: 0;
+        }
+
+        .modal-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .modal-list li {
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.93rem;
+            color: var(--sub);
+            line-height: 1.65;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .modal-list li::before {
+            content: '';
+            position: absolute;
+            left: 3px;
+            top: 10px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--accent);
+            opacity: .45;
+        }
+
+        .modal-section.resultats .modal-list li {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .modal-section.resultats .modal-list li::before {
+            opacity: 1;
+            width: 6px;
+            height: 6px;
+            top: 9px;
+        }
+
+        /* CTA button */
+        .modal-cta-row {
+            margin-top: 34px;
+            padding-top: 28px;
+            border-top: 1px solid var(--border);
+        }
+
+        .modal-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 28px;
+            background: var(--accent);
+            color: #fff !important;
+            border-radius: 40px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 0.87rem;
+            font-weight: 700;
+            text-decoration: none !important;
+            letter-spacing: .03em;
+            box-shadow: 0 6px 20px rgba(122,31,43,.28);
+            transition: background .2s, transform .2s, box-shadow .2s;
+        }
+
+        .modal-cta:hover {
+            background: var(--accent2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(122,31,43,.35);
+        }
+
+        .modal-cta-arrow {
+            font-size: 1rem;
+            transition: transform .2s;
+        }
+
+        .modal-cta:hover .modal-cta-arrow {
+            transform: translateX(3px);
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+        @media (max-width: 960px) {
+            .card-grid { grid-template-columns: repeat(2, 1fr); }
+            .section-projets { padding: 48px 28px 72px; }
+        }
+
+        @media (max-width: 580px) {
+            .card-grid { grid-template-columns: 1fr; }
+            .section-projets { padding: 36px 20px 56px; }
+            .modal-box { padding: 32px 24px 36px; }
+            .modal-title { font-size: 1.4rem; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="competences.html">Compétences</a></li>
+            <li><a href="projets.html">Projets</a></li>
+            <li><a href="experiences.html">Expériences</a></li>
+            <li><a href="engagement.html">Engagement</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="section-projets">
+
+        <h1>Projets</h1>
+        <p class="hint" style="font-family:'Source Sans 3',sans-serif;font-size:0.78rem;font-weight:600;color:#c4b8b0;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:48px;">Survolez pour découvrir · Cliquez pour les détails</p>
+
+        <!-- ── Statistique & Modélisation ── -->
+        <div class="categorie">
+            <div class="cat-header">
+                <div class="cat-header-text">
+                    <span class="cat-label">Statistique &amp; Modélisation</span>
+                    <span class="cat-count">3 projets</span>
+                </div>
+                <div class="cat-rule"></div>
+            </div>
+            <div class="card-grid">
+
+                <div class="proj-card" onclick="openModal('m-regression')">
+                    <img src="images/projets/projet1.png" class="proj-card-img" alt="Régression polynomiale">
+                    <div class="proj-card-overlay"></div>
+                    <div class="proj-card-cue">↗</div>
+                    <div class="proj-card-body">
+                        <h3 class="proj-card-title">Courbes de croissance par régression polynomiale</h3>
+                        <div class="proj-card-tags">
+                            <span class="tag">R</span>
+                            <span class="tag">Régression</span>
+                            <span class="tag">AIC</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="proj-card" onclick="openModal('m-swanganz')">
+                    <img src="images/projets/projet2.png" class="proj-card-img" alt="Impact sonde Swan-Ganz">
+                    <div class="proj-card-overlay"></div>
+                    <div class="proj-card-cue">↗</div>
+                    <div class="proj-card-body">
+                        <h3 class="proj-card-title">Impact de la sonde Swan-Ganz en soins intensifs</h3>
+                        <div class="proj-card-tags">
+                            <span class="tag">R</span>
+                            <span class="tag">Chi²</span>
+                            <span class="tag">Régression logistique</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="proj-card" onclick="openModal('m-cardio')">
+                    <img src="images/projets/projet3.png" class="proj-card-img" alt="Profil clients Cardio Good Fitness">
+                    <div class="proj-card-overlay"></div>
+                    <div class="proj-card-cue">↗</div>
+                    <div class="proj-card-body">
+                        <h3 class="proj-card-title">Profil clients Cardio Good Fitness</h3>
+                        <div class="proj-card-tags">
+                            <span class="tag">R</span>
+                            <span class="tag">Spearman</span>
+                            <span class="tag">Khi-deux</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── Séries temporelles ── -->
+        <div class="categorie">
+            <div class="cat-header">
+                <div class="cat-header-text">
+                    <span class="cat-label">Séries temporelles &amp; Prévision</span>
+                    <span class="cat-count">1 projet</span>
+                </div>
+                <div class="cat-rule"></div>
+            </div>
+            <div class="card-grid">
+
+                <div class="proj-card" onclick="openModal('m-nucleaire')">
+                    <img src="images/projets/projet4.png" class="proj-card-img" alt="Production nucléaire américaine">
+                    <div class="proj-card-overlay"></div>
+                    <div class="proj-card-cue">↗</div>
+                    <div class="proj-card-body">
+                        <h3 class="proj-card-title">Prévision de la production nucléaire américaine</h3>
+                        <div class="proj-card-tags">
+                            <span class="tag">R</span>
+                            <span class="tag">SARMA</span>
+                            <span class="tag">Holt-Winters</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ── Data & Reporting ── -->
+        <div class="categorie">
+            <div class="cat-header">
+                <div class="cat-header-text">
+                    <span class="cat-label">Data &amp; Reporting</span>
+                    <span class="cat-count">2 projets</span>
+                </div>
+                <div class="cat-rule"></div>
+            </div>
+            <div class="card-grid">
+
+                <div class="proj-card" onclick="openModal('m-caf')">
+                    <img src="images/projets/projet5.png" class="proj-card-img" alt="Reporting décisionnel CAF">
+                    <div class="proj-card-overlay"></div>
+                    <div class="proj-card-cue">↗</div>
+                    <div class="proj-card-body">
+                        <h3 class="proj-card-title">Reporting décisionnel dynamique — CAF</h3>
+                        <div class="proj-card-tags">
+                            <span class="tag">Excel</span>
+                            <span class="tag">Dashboard</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="proj-card" onclick="openModal('m-moamoe')">
+                    <img src="images/projets/projet6.png" class="proj-card-img" alt="Conduite de projet MOA/MOE">
+                    <div class="proj-card-overlay"></div>
+                    <div class="proj-card-cue">↗</div>
+                    <div class="proj-card-body">
+                        <h3 class="proj-card-title">Conduite d'un projet d'analyse statistique</h3>
+                        <div class="proj-card-tags">
+                            <span class="tag">Microsoft Project</span>
+                            <span class="tag">R</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- ================================================================
+         MODALS — text only, no image
+    ================================================================ -->
+
+    <!-- Régression -->
+    <div class="modal-wrap" id="m-regression">
+        <div class="modal-backdrop" onclick="closeModal('m-regression')"></div>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('m-regression')">✕</button>
+            <span class="modal-cat">Statistique &amp; Modélisation</span>
+            <h2 class="modal-title">Modélisation des courbes de croissance par régression polynomiale</h2>
+            <div class="modal-tags">
+                <span class="tag">R</span>
+                <span class="tag">Régression polynomiale</span>
+                <span class="tag">AIC</span>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="modal-section">
+                <div class="modal-section-head">
+                    <div class="modal-section-icon">🛠</div>
+                    <p class="modal-section-label">Outils utilisés</p>
+                </div>
+                <ul class="modal-list"><li>R — ggplot2, stats</li></ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head">
+                    <div class="modal-section-icon">📐</div>
+                    <p class="modal-section-label">Compétences mobilisées</p>
+                </div>
+                <ul class="modal-list">
+                    <li>Analyse descriptive sur 1 456 observations (Gabon / Palau)</li>
+                    <li>Régressions polynomiales de degrés variés</li>
+                    <li>Sélection du degré optimal via critère AIC</li>
+                    <li>Comparaison avec un modèle linéaire de référence</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head">
+                    <div class="modal-section-icon">📄</div>
+                    <p class="modal-section-label">Livrables</p>
+                </div>
+                <ul class="modal-list">
+                    <li>Rapport d'analyse statistique (PDF)</li>
+                    <li>Code R commenté et reproductible</li>
+                </ul>
+            </div>
+            <div class="modal-section resultats">
+                <div class="modal-section-head">
+                    <div class="modal-section-icon">✅</div>
+                    <p class="modal-section-label">Résultats</p>
+                </div>
+                <ul class="modal-list">
+                    <li>Degré optimal identifié pour modéliser la taille en fonction de l'âge</li>
+                    <li>Supériorité du modèle polynomial sur le linéaire confirmée</li>
+                </ul>
+            </div>
+            <div class="modal-cta-row">
+                <a href="documents/regression.pdf" class="modal-cta">Voir la réalisation <span class="modal-cta-arrow">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swan-Ganz -->
+    <div class="modal-wrap" id="m-swanganz">
+        <div class="modal-backdrop" onclick="closeModal('m-swanganz')"></div>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('m-swanganz')">✕</button>
+            <span class="modal-cat">Statistique &amp; Modélisation</span>
+            <h2 class="modal-title">Analyse de l'impact de la sonde Swan-Ganz en soins intensifs</h2>
+            <div class="modal-tags">
+                <span class="tag">R</span><span class="tag">Chi²</span><span class="tag">Régression logistique</span>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">🛠</div><p class="modal-section-label">Outils utilisés</p></div>
+                <ul class="modal-list"><li>R — stats, glm</li></ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📐</div><p class="modal-section-label">Compétences mobilisées</p></div>
+                <ul class="modal-list">
+                    <li>Analyses univariées et bivariées sur 5 500 patients</li>
+                    <li>Tests Chi², Student et Fisher</li>
+                    <li>Modélisation par régression logistique</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📄</div><p class="modal-section-label">Livrables</p></div>
+                <ul class="modal-list"><li>Rapport statistique complet (PDF)</li><li>Code R commenté</li></ul>
+            </div>
+            <div class="modal-section resultats">
+                <div class="modal-section-head"><div class="modal-section-icon">✅</div><p class="modal-section-label">Résultats</p></div>
+                <ul class="modal-list">
+                    <li>Variables physiologiques explicatives de la survie identifiées</li>
+                    <li>Impact du dispositif évalué indépendamment des co-variables</li>
+                </ul>
+            </div>
+            <div class="modal-cta-row">
+                <a href="documents/rapport_sonde_swan_ganz.pdf" class="modal-cta">Voir la réalisation <span class="modal-cta-arrow">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cardio -->
+    <div class="modal-wrap" id="m-cardio">
+        <div class="modal-backdrop" onclick="closeModal('m-cardio')"></div>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('m-cardio')">✕</button>
+            <span class="modal-cat">Statistique &amp; Modélisation</span>
+            <h2 class="modal-title">Analyse statistique bivariée – Profil clients Cardio Good Fitness</h2>
+            <div class="modal-tags">
+                <span class="tag">R</span><span class="tag">Spearman</span><span class="tag">Khi-deux</span>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">🛠</div><p class="modal-section-label">Outils utilisés</p></div>
+                <ul class="modal-list"><li>R — ggplot2, corrplot, stats</li></ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📐</div><p class="modal-section-label">Compétences mobilisées</p></div>
+                <ul class="modal-list">
+                    <li>Analyses bivariées sur 180 clients (âge, genre, éducation)</li>
+                    <li>Tests Student, Khi-deux et Fisher</li>
+                    <li>Corrélation de Spearman</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📄</div><p class="modal-section-label">Livrables</p></div>
+                <ul class="modal-list"><li>Rapport d'analyse bivariée (PDF)</li><li>Visualisations statistiques commentées</li></ul>
+            </div>
+            <div class="modal-section resultats">
+                <div class="modal-section-head"><div class="modal-section-icon">✅</div><p class="modal-section-label">Résultats</p></div>
+                <ul class="modal-list">
+                    <li>Différences significatives entre profils clients identifiées</li>
+                    <li>Recommandations décisionnelles formulées à partir des données</li>
+                </ul>
+            </div>
+            <div class="modal-cta-row">
+                <a href="documents/rapport_analyse_bivariee.pdf" class="modal-cta">Voir la réalisation <span class="modal-cta-arrow">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nucléaire -->
+    <div class="modal-wrap" id="m-nucleaire">
+        <div class="modal-backdrop" onclick="closeModal('m-nucleaire')"></div>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('m-nucleaire')">✕</button>
+            <span class="modal-cat">Séries temporelles &amp; Prévision</span>
+            <h2 class="modal-title">Analyse et prévision de séries temporelles – Production nucléaire américaine</h2>
+            <div class="modal-tags">
+                <span class="tag">R</span><span class="tag">SARMA</span><span class="tag">Holt-Winters</span>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">🛠</div><p class="modal-section-label">Outils utilisés</p></div>
+                <ul class="modal-list"><li>R — forecast, tseries, ggplot2</li></ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📐</div><p class="modal-section-label">Compétences mobilisées</p></div>
+                <ul class="modal-list">
+                    <li>Traitement de 288 observations mensuelles (EIA, 2001–2024)</li>
+                    <li>Décomposition additive : tendance, saisonnalité, résidus</li>
+                    <li>Comparaison de trois modèles : régression, Holt-Winters, SARMA</li>
+                    <li>Évaluation et sélection sur critère EQM</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📄</div><p class="modal-section-label">Livrables</p></div>
+                <ul class="modal-list"><li>Rapport de modélisation complet (PDF)</li><li>Code R avec comparaison des modèles</li></ul>
+            </div>
+            <div class="modal-section resultats">
+                <div class="modal-section-head"><div class="modal-section-icon">✅</div><p class="modal-section-label">Résultats</p></div>
+                <ul class="modal-list">
+                    <li>Modèle SARMA retenu comme optimal sur critère EQM</li>
+                    <li>Prévisions fiables de la production nucléaire pour 2024</li>
+                </ul>
+            </div>
+            <div class="modal-cta-row">
+                <a href="documents/rapport_nucleaire.pdf" class="modal-cta">Voir la réalisation <span class="modal-cta-arrow">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- CAF -->
+    <div class="modal-wrap" id="m-caf">
+        <div class="modal-backdrop" onclick="closeModal('m-caf')"></div>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('m-caf')">✕</button>
+            <span class="modal-cat">Data &amp; Reporting</span>
+            <h2 class="modal-title">Reporting décisionnel dynamique pour la CAF sous Excel</h2>
+            <div class="modal-tags">
+                <span class="tag">Excel</span><span class="tag">Dashboard</span><span class="tag">Power Query</span>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">🛠</div><p class="modal-section-label">Outils utilisés</p></div>
+                <ul class="modal-list"><li>Microsoft Excel — tableaux croisés dynamiques, Power Query</li></ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📐</div><p class="modal-section-label">Compétences mobilisées</p></div>
+                <ul class="modal-list">
+                    <li>Nettoyage et structuration de données réelles issues de la CAF</li>
+                    <li>Conception d'un dashboard avec indicateurs mensuels et annuels</li>
+                    <li>Mise en forme conditionnelle et slicers interactifs</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📄</div><p class="modal-section-label">Livrables</p></div>
+                <ul class="modal-list"><li>Dashboard Excel interactif (.xlsx)</li></ul>
+            </div>
+            <div class="modal-section resultats">
+                <div class="modal-section-head"><div class="modal-section-icon">✅</div><p class="modal-section-label">Résultats</p></div>
+                <ul class="modal-list">
+                    <li>Outil opérationnel facilitant l'aide à la décision pour les équipes</li>
+                    <li>Visualisation claire des volumes de courriers entrants par période</li>
+                </ul>
+            </div>
+            <div class="modal-cta-row">
+                <a href="documents/reporting.xlsx" class="modal-cta">Voir la réalisation <span class="modal-cta-arrow">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- MOA/MOE -->
+    <div class="modal-wrap" id="m-moamoe">
+        <div class="modal-backdrop" onclick="closeModal('m-moamoe')"></div>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('m-moamoe')">✕</button>
+            <span class="modal-cat">Data &amp; Reporting</span>
+            <h2 class="modal-title">Conduite et planification d'un projet d'analyse statistique</h2>
+            <div class="modal-tags">
+                <span class="tag">Microsoft Project</span><span class="tag">R</span><span class="tag">Gestion de projet</span>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">🛠</div><p class="modal-section-label">Outils utilisés</p></div>
+                <ul class="modal-list"><li>Microsoft Project</li><li>R</li></ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📐</div><p class="modal-section-label">Compétences mobilisées</p></div>
+                <ul class="modal-list">
+                    <li>Élaboration d'un planning prévisionnel et réel (Gantt)</li>
+                    <li>Coordination des rôles MOA / MOE</li>
+                    <li>Suivi des livrables et gestion des délais</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head"><div class="modal-section-icon">📄</div><p class="modal-section-label">Livrables</p></div>
+                <ul class="modal-list"><li>Rapport de conduite de projet (PDF)</li><li>Planning Gantt prévisionnel et réalisé</li></ul>
+            </div>
+            <div class="modal-section resultats">
+                <div class="modal-section-head"><div class="modal-section-icon">✅</div><p class="modal-section-label">Résultats</p></div>
+                <ul class="modal-list">
+                    <li>Projet livré dans les délais, organisation intégralement documentée</li>
+                    <li>Méthodologie rigoureuse valorisée dans le rapport final</li>
+                </ul>
+            </div>
+            <div class="modal-cta-row">
+                <a href="documents/rapport_conduite_projet.pdf" class="modal-cta">Voir la réalisation <span class="modal-cta-arrow">→</span></a>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function openModal(id) {
+            const el = document.getElementById(id);
+            el.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.addEventListener('keydown', e => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-wrap.open').forEach(m => {
+                    m.classList.remove('open');
+                    document.body.style.overflow = '';
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

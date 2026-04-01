@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Engagement - Portfolio Margot Marciano</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+
+        <style>
+            /* Chiffres clés intégrés dans l'encadré principal */
+            .chiffres-inline {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0;
+                border: 1px solid #c4b8b0;
+                border-radius: 10px;
+                overflow: hidden;
+                margin: 24px 0 28px;
+            }
+
+            .chiffre-cell {
+                padding: 18px 12px;
+                text-align: center;
+                border-right: 1px solid #c4b8b0;
+                background-color: #fff;
+            }
+
+            .chiffre-cell:last-child {
+                border-right: none;
+            }
+
+            .chiffre-cell .valeur {
+                display: block;
+                font-family: 'Cormorant Garamond', Georgia, serif;
+                font-size: 2rem;
+                font-weight: 700;
+                color: #7a1f2b;
+                line-height: 1;
+                margin-bottom: 5px;
+            }
+
+            .chiffre-cell .label {
+                display: block;
+                font-family: 'Source Sans 3', sans-serif;
+                font-size: 0.82rem;
+                color: #5a3535;
+                font-weight: 500;
+                line-height: 1.4;
+            }
+
+            /* Cartes rôle — Design B */
+            .grille-roles {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 14px;
+                margin-top: 6px;
+            }
+
+            .carte-role {
+                background-color: #fff;
+                border: 1px solid #c4b8b0;
+                border-radius: 12px;
+                padding: 20px 20px 22px;
+                position: relative;
+                overflow: hidden;
+                transition: box-shadow 0.2s ease, transform 0.2s ease;
+            }
+
+            .carte-role::before {
+                content: '';
+                position: absolute;
+                top: 0; left: 0; right: 0;
+                height: 3px;
+                background: linear-gradient(90deg, #7a1f2b, #c4b8b0);
+            }
+
+            .carte-role:hover {
+                box-shadow: 0 6px 20px rgba(122, 31, 43, 0.1);
+                transform: translateY(-2px);
+            }
+
+            .carte-role .r-numero {
+                font-family: 'Source Sans 3', sans-serif;
+                font-size: 0.72rem;
+                font-weight: 600;
+                color: #9a8080;
+                letter-spacing: 0.06em;
+                display: block;
+                margin-bottom: 14px;
+            }
+
+            .carte-role .r-header {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+
+            .carte-role .r-icone-wrap {
+                width: 38px;
+                height: 38px;
+                border-radius: 8px;
+                background: #f0e8e5;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .carte-role .r-icone-wrap svg {
+                width: 20px;
+                height: 20px;
+            }
+
+            .carte-role h3 {
+                font-family: 'Source Sans 3', sans-serif;
+                font-size: 1rem;
+                font-weight: 700;
+                color: #7a1f2b;
+                margin: 0;
+                line-height: 1.2;
+            }
+
+            .carte-role ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+            }
+
+            .carte-role ul li {
+                font-family: 'Source Sans 3', sans-serif;
+                font-size: 0.93rem;
+                color: #4a2c2c;
+                line-height: 1.6;
+                padding-left: 16px;
+                position: relative;
+                margin: 0;
+            }
+
+            .carte-role ul li::before {
+                content: '–';
+                position: absolute;
+                left: 0;
+                color: #7a1f2b;
+                font-weight: 700;
+            }
+
+            /* Réseaux sociaux */
+            .reseaux-liens {
+                display: flex;
+                gap: 16px;
+                flex-wrap: wrap;
+                margin-top: 10px;
+            }
+
+            .btn-rs {
+                display: inline-flex;
+                align-items: center;
+                gap: 12px;
+                padding: 13px 26px 13px 18px;
+                border-radius: 14px;
+                font-family: 'Source Sans 3', sans-serif;
+                font-size: 0.97rem;
+                font-weight: 700;
+                text-decoration: none;
+                border: 1.5px solid transparent;
+                color: #2e1a1a;
+                background: #faf6f3;
+                box-shadow: 0 2px 10px rgba(74, 44, 44, 0.08);
+                transition: box-shadow 0.25s ease, transform 0.25s ease, background 0.25s ease;
+                white-space: nowrap;
+                letter-spacing: 0.01em;
+            }
+
+            .btn-rs img {
+                width: 28px;
+                height: 28px;
+                flex-shrink: 0;
+                object-fit: contain;
+            }
+
+            /* Accent coloré gauche propre à chaque réseau */
+            .btn-rs-instagram { border-left: 4px solid #d6249f; }
+            .btn-rs-snapchat  { border-left: 4px solid #FFFC00; background: #faf6f3; }
+            .btn-rs-tiktok    { border-left: 4px solid #010101; }
+
+            .btn-rs:hover {
+                background: #f0e8e4;
+                box-shadow: 0 8px 28px rgba(74, 44, 44, 0.14);
+                transform: translateY(-3px);
+                text-decoration: none;
+                color: #2e1a1a;
+            }
+
+            /* Galerie photos SOHANA */
+            .galerie-sohana {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+                margin-top: 24px;
+            }
+
+            .galerie-img {
+                width: 100%;
+                height: 200px;
+                object-fit: cover;
+                border-radius: 10px;
+                border: 1px solid #c4b8b0;
+                display: block;
+            }
+
+            /* Titres h2 dans la charte */
+            .bloc-engagement h2 {
+                font-family: 'Cormorant Garamond', Georgia, serif;
+                font-size: 1.65rem;
+                font-weight: 700;
+                color: #4a2c2c;
+                letter-spacing: 0.01em;
+                margin-bottom: 18px;
+                padding-bottom: 10px;
+                border-bottom: 2px solid #e0d4ce;
+                position: relative;
+            }
+
+            .bloc-engagement h2::after {
+                content: '';
+                position: absolute;
+                bottom: -2px;
+                left: 0;
+                width: 48px;
+                height: 2px;
+                background: #7a1f2b;
+                border-radius: 2px;
+            }
+
+            /* Fond beige légèrement plus chaud pour les blocs */
+            .bloc-engagement {
+                background-color: #f5f0ed;
+            }
+
+            /* Responsive */
+            @media (max-width: 600px) {
+                .chiffres-inline {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+                .chiffre-cell:nth-child(2) { border-right: none; }
+                .chiffre-cell:nth-child(3),
+                .chiffre-cell:nth-child(4) { border-top: 1px solid #c4b8b0; }
+                .chiffre-cell:nth-child(4) { border-right: none; }
+                .grille-roles { grid-template-columns: 1fr; }
+                .galerie-sohana { grid-template-columns: 1fr; }
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="competences.html">Compétences</a></li>
+                <li><a href="projets.html">Projets</a></li>
+                <li><a href="experiences.html">Expériences</a></li>
+                <li><a href="engagement.html">Engagement</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+        <section class="section-engagement">
+            <h1>Engagement</h1>
+
+            <span class="section-label">Engagement associatif</span>
+
+            <!-- =========================================
+                 ENCADRÉ 1 — Principal
+            ========================================= -->
+            <div class="bloc-engagement">
+
+                <h2>Association SOHANA — Cofondatrice</h2>
+
+                <!-- Chiffres clés -->
+                <div class="chiffres-inline">
+                    <div class="chiffre-cell">
+                        <span class="valeur">40</span>
+                        <span class="label">bénévoles actifs</span>
+                    </div>
+                    <div class="chiffre-cell">
+                        <span class="valeur">500+</span>
+                        <span class="label">repas distribués</span>
+                    </div>
+                    <div class="chiffre-cell">
+                        <span class="valeur">1×</span>
+                        <span class="label">maraude / mois</span>
+                    </div>
+                    <div class="chiffre-cell">
+                        <span class="valeur">2025</span>
+                        <span class="label">création officielle</span>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <p>
+                    Avec trois amies d'enfance, j'ai cofondé l'association humanitaire <strong>SOHANA</strong>. Nous organisons des maraudes depuis juillet 2025 et avons officiellement déclaré l'association auprès de l'État en <strong>novembre 2025</strong>. Chaque mois, nous adaptons nos actions aux saisons&nbsp;: repas chauds, vêtements, couvertures.
+                </p>
+                <p>
+                    Je participe activement à la <strong>coordination des bénévoles</strong>, à la <strong>gestion budgétaire</strong> et à l'<strong>organisation logistique</strong> des maraudes.
+                </p>
+
+                <!-- Galerie photos -->
+                <div class="galerie-sohana">
+                    <img src="images/projets/localisation_association.jpg" alt="Maraude SOHANA – distribution de repas" class="galerie-img">
+                    <img src="images/projets/photo_maraude_2.jpg" alt="Maraude SOHANA – équipe bénévoles" class="galerie-img">
+                    <img src="images/projets/photo_maraude_1.jpg" alt="Maraude SOHANA – terrain" class="galerie-img">
+                </div>
+
+            </div>
+
+            <!-- =========================================
+                 ENCADRÉ 2 — Mon rôle
+            ========================================= -->
+            <div class="bloc-engagement">
+
+                <h2>Mon rôle</h2>
+
+                <div class="grille-roles">
+
+                    <div class="carte-role">
+                        <span class="r-numero">01</span>
+                        <div class="r-header">
+                            <div class="r-icone-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#7a1f2b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/>
+                                </svg>
+                            </div>
+                            <h3>Trésorière</h3>
+                        </div>
+                        <ul>
+                            <li>Gestion du budget</li>
+                            <li>Suivi des dépenses</li>
+                        </ul>
+                    </div>
+
+                    <div class="carte-role">
+                        <span class="r-numero">02</span>
+                        <div class="r-header">
+                            <div class="r-icone-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#7a1f2b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                                    <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+                                </svg>
+                            </div>
+                            <h3>Coordination</h3>
+                        </div>
+                        <ul>
+                            <li>Organisation des maraudes</li>
+                            <li>Gestion des bénévoles</li>
+                        </ul>
+                    </div>
+
+                    <div class="carte-role">
+                        <span class="r-numero">03</span>
+                        <div class="r-header">
+                            <div class="r-icone-wrap">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="#7a1f2b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
+                                </svg>
+                            </div>
+                            <h3>Engagement terrain</h3>
+                        </div>
+                        <ul>
+                            <li>Participation aux maraudes</li>
+                            <li>Distribution directe</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- =========================================
+                 ENCADRÉ 3 — Réseaux sociaux
+            ========================================= -->
+            <div class="bloc-engagement">
+
+                <h2>Suivre l'association</h2>
+
+                <p>Retrouvez les actualités de SOHANA sur nos réseaux et rejoignez la communauté.</p>
+
+                <div class="reseaux-liens">
+                    <!-- Instagram -->
+                    <a href="https://www.instagram.com/sohana.asso/"
+                       target="_blank" rel="noopener"
+                       class="btn-rs btn-rs-instagram"
+                       aria-label="Instagram SOHANA">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/600px-Instagram_icon.png"
+                             alt="" aria-hidden="true">
+                        Instagram
+                    </a>
+                    <!-- Snapchat -->
+                    <a href="https://www.snapchat.com/add/sohana.asso"
+                       target="_blank" rel="noopener"
+                       class="btn-rs btn-rs-snapchat"
+                       aria-label="Snapchat SOHANA">
+                        <img src="images/icones/logo_snap.png"
+                             alt="" aria-hidden="true">
+                        Snapchat
+                    </a>
+                    <!-- TikTok -->
+                    <a href="https://www.tiktok.com/@sohana.asso"
+                       target="_blank" rel="noopener"
+                       class="btn-rs btn-rs-tiktok"
+                       aria-label="TikTok SOHANA">
+                        <img src="images/icones/logo_tiktok.png.webp"
+                             alt="" aria-hidden="true">
+                        TikTok
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- =========================================
+                 LOISIRS — mise en page créative split
+            ========================================= -->
+            <span class="section-label">Autres centres d'intérêt</span>
+
+            <div class="loisirs-split">
+
+                <!-- ——— PANNEAU MUSIQUE ——— -->
+                <div class="loisir-panneau loisir-musique">
+
+                    <!-- Graphic accent -->
+                    <div class="loisir-bg-glyph" aria-hidden="true">♪</div>
+
+                    <div class="loisir-inner">
+                        <div class="loisir-label-top">Passion n°01</div>
+
+                        <h2 class="loisir-titre">Musique</h2>
+
+                        <p class="loisir-texte">
+                            La musique occupe une place importante dans mon quotidien.
+                            J'assiste chaque année à des concerts d'artistes français,
+                            une façon de vivre la musique autrement qu'à l'écoute.
+                        </p>
+
+                        <div class="loisir-tags">
+                            <span class="loisir-tag">Écoute quotidienne</span>
+                            <span class="loisir-tag">Concerts live</span>
+                            <span class="loisir-tag">Artistes français</span>
+                        </div>
+                    </div>
+
+                    <!-- Bande décorative basse -->
+                    <div class="loisir-bande"></div>
+                </div>
+
+                <!-- ——— SÉPARATEUR ——— -->
+                <div class="loisir-separateur" aria-hidden="true">
+                    <span class="loisir-sep-tiret"></span>
+                    <span class="loisir-sep-et">&amp;</span>
+                    <span class="loisir-sep-tiret"></span>
+                </div>
+
+                <!-- ——— PANNEAU CINÉMA ——— -->
+                <div class="loisir-panneau loisir-cinema">
+
+                    <!-- Graphic accent -->
+                    <div class="loisir-bg-glyph" aria-hidden="true">▶</div>
+
+                    <div class="loisir-inner">
+                        <div class="loisir-label-top">Passion n°02</div>
+
+                        <h2 class="loisir-titre">Cinéma</h2>
+
+                        <p class="loisir-texte">
+                            Passionnée de grand écran, je vais au cinéma presque chaque semaine
+                            grâce à un abonnement — une habitude qui me permet de découvrir
+                            aussi bien les sorties récentes que le cinéma de patrimoine.
+                        </p>
+
+                        <div class="loisir-tags">
+                            <span class="loisir-tag">~1 fois / semaine</span>
+                            <span class="loisir-tag">Abonnement salle</span>
+                            <span class="loisir-tag">Cinéma français</span>
+                        </div>
+                    </div>
+
+                    <!-- Bande décorative basse -->
+                    <div class="loisir-bande"></div>
+                </div>
+
+            </div>
+
+            <style>
+                /* ===== LOISIRS SPLIT ===== */
+
+                .loisirs-split {
+                    display: grid;
+                    grid-template-columns: 1fr auto 1fr;
+                    gap: 0;
+                    margin-top: 18px;
+                    align-items: stretch;
+                }
+
+                /* — Panneau commun */
+                .loisir-panneau {
+                    position: relative;
+                    background-color: #f5f0ed;
+                    border: 1px solid #c4b8b0;
+                    border-radius: 20px;
+                    overflow: hidden;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    transition: box-shadow 0.3s ease, transform 0.3s ease;
+                    box-shadow: 0 4px 20px rgba(122, 31, 43, 0.07);
+                }
+
+                .loisir-panneau:hover {
+                    box-shadow: 0 12px 40px rgba(122, 31, 43, 0.13);
+                    transform: translateY(-3px);
+                }
+
+                /* — Gros glyphe décoratif en fond */
+                .loisir-bg-glyph {
+                    position: absolute;
+                    top: -14px;
+                    right: -8px;
+                    font-size: 9rem;
+                    line-height: 1;
+                    color: #7a1f2b;
+                    opacity: 0.045;
+                    font-family: 'Cormorant Garamond', Georgia, serif;
+                    pointer-events: none;
+                    user-select: none;
+                    letter-spacing: -0.02em;
+                }
+
+                /* — Contenu principal */
+                .loisir-inner {
+                    padding: 36px 36px 28px;
+                    position: relative;
+                    z-index: 1;
+                    flex: 1;
+                }
+
+                /* — Numéro en haut */
+                .loisir-label-top {
+                    font-family: 'Source Sans 3', sans-serif;
+                    font-size: 0.68rem;
+                    font-weight: 700;
+                    letter-spacing: 0.14em;
+                    text-transform: uppercase;
+                    color: #9a7070;
+                    margin-bottom: 14px;
+                }
+
+                /* — Titre grand */
+                .loisir-titre {
+                    font-family: 'Cormorant Garamond', Georgia, serif;
+                    font-size: 2.4rem;
+                    font-weight: 700;
+                    color: #4a2c2c;
+                    margin: 0 0 20px;
+                    line-height: 1.05;
+                    letter-spacing: 0.01em;
+                }
+
+                /* — Texte descriptif */
+                .loisir-texte {
+                    font-family: 'Source Sans 3', sans-serif;
+                    font-size: 0.93rem;
+                    color: #5a3535;
+                    line-height: 1.75;
+                    margin: 0 0 24px;
+                }
+
+                /* — Tags */
+                .loisir-tags {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 8px;
+                }
+
+                .loisir-tag {
+                    font-family: 'Source Sans 3', sans-serif;
+                    font-size: 0.75rem;
+                    font-weight: 600;
+                    color: #7a1f2b;
+                    background-color: #f0e8e5;
+                    border: 1px solid #d4b8bc;
+                    border-radius: 20px;
+                    padding: 4px 12px;
+                    letter-spacing: 0.02em;
+                }
+
+                /* — Bande colorée en bas du panneau */
+                .loisir-bande {
+                    height: 4px;
+                    background: linear-gradient(90deg, #7a1f2b 0%, #c4b8b0 100%);
+                    flex-shrink: 0;
+                }
+
+                /* — Séparateur central */
+                .loisir-separateur {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    padding: 0 20px;
+                }
+
+                .loisir-sep-et {
+                    font-family: 'Cormorant Garamond', Georgia, serif;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    color: #c4b8b0;
+                    line-height: 1;
+                }
+
+                .loisir-sep-tiret {
+                    display: block;
+                    width: 1px;
+                    height: 48px;
+                    background: linear-gradient(to bottom, transparent, #c4b8b0, transparent);
+                }
+
+                /* — Responsive */
+                @media (max-width: 680px) {
+                    .loisirs-split {
+                        grid-template-columns: 1fr;
+                    }
+                    .loisir-separateur {
+                        flex-direction: row;
+                        padding: 10px 0;
+                    }
+                    .loisir-sep-tiret {
+                        width: 48px;
+                        height: 1px;
+                        background: linear-gradient(to right, transparent, #c4b8b0, transparent);
+                    }
+                }
+            </style>
+
+        </section>
+
+    </body>
+</html>
