@@ -645,13 +645,27 @@
             <div class="cat-header">
                 <div class="cat-header-text">
                     <span class="cat-label">Data &amp; Reporting</span>
-                    <span class="cat-count">2 projets</span>
+                    <span class="cat-count">3 projets</span>
                 </div>
                 <div class="cat-rule"></div>
             </div>
             <div class="card-grid">
 
-                <div class="proj-card" onclick="openModal('m-caf')">
+                <div class="proj-card" onclick="openModal('m-sondage')">
+                    <img src="images/projets/redressement.png" class="proj-card-img" alt="Sondage et Redressement pratiques culturelles">
+                    <div class="proj-card-overlay"></div>
+                    <div class="proj-card-cue">↗</div>
+                    <div class="proj-card-body">
+                        <h3 class="proj-card-title">Sondage et Redressement — Pratiques culturelles étudiantes</h3>
+                        <div class="proj-card-tags">
+                            <span class="tag">SAS</span>
+                            <span class="tag">Excel</span>
+                            <span class="tag">Macro CALMAR</span>
+                        </div>
+                    </div>
+                </div>
+
+                                <div class="proj-card" onclick="openModal('m-caf')">
                     <img src="images/projets/projet5.png" class="proj-card-img" alt="Reporting décisionnel CAF">
                     <div class="proj-card-overlay"></div>
                     <div class="proj-card-cue">↗</div>
@@ -862,6 +876,86 @@
             </div>
             <div class="modal-cta-row">
                 <a href="documents/rapport_nucleaire.pdf" class="modal-cta">Voir la réalisation <span class="modal-cta-arrow">→</span></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sondage & Redressement -->
+    <div class="modal-wrap" id="m-sondage">
+        <div class="modal-backdrop" onclick="closeModal('m-sondage')"></div>
+        <div class="modal-box">
+            <button class="modal-close" onclick="closeModal('m-sondage')">✕</button>
+            <span class="modal-cat">Data &amp; Reporting</span>
+            <h2 class="modal-title">Sondage et Redressement — Pratiques culturelles des étudiant·e·s</h2>
+            <div class="modal-tags">
+                <span class="tag">SAS</span>
+                <span class="tag">Excel</span>
+                <span class="tag">Macro CALMAR</span>
+                <span class="tag">Analyse bivariée</span>
+            </div>
+            <div class="modal-divider"></div>
+            <div class="modal-section">
+                <div class="modal-section-head">
+                    <div class="modal-section-icon">🛠</div>
+                    <p class="modal-section-label">Outils utilisés</p>
+                </div>
+                <ul class="modal-list">
+                    <li>SAS — préparation des données, recodage des variables, macro CALMAR (INSEE)</li>
+                    <li>Excel — analyses bivariées et visualisation des résultats redressés</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head">
+                    <div class="modal-section-icon">📐</div>
+                    <p class="modal-section-label">Compétences mobilisées</p>
+                </div>
+                <ul class="modal-list">
+                    <li>Redressement par calage sur marges (macro CALMAR) — 2 288 obs. extrapolées à 1,6 M d'étudiant·e·s</li>
+                    <li>Recodage des variables de calage : discipline et cursus</li>
+                    <li>Analyses bivariées entre filière d'étude et pratiques culturelles</li>
+                    <li>Test de 4 hypothèses · rapport de poids 8,24 · efficacité 73,2 %</li>
+                </ul>
+            </div>
+            <div class="modal-section">
+                <div class="modal-section-head">
+                    <div class="modal-section-icon">📄</div>
+                    <p class="modal-section-label">Livrables</p>
+                </div>
+                <ul class="modal-list">
+                    <li>Note explicative (4 pages)</li>
+                    <li>Présentation Canva (16 pages)</li>
+                    <li>Base de données redressée (.xlsx)</li>
+                </ul>
+            </div>
+            <div class="modal-section resultats">
+                <div class="modal-section-head">
+                    <div class="modal-section-icon">✅</div>
+                    <p class="modal-section-label">Résultats</p>
+                </div>
+                <ul class="modal-list">
+                    <li>Sciences → sport/bien-être dominant ; ALLS → activités créatives et culturelles</li>
+                    <li>La culture occupe une place moindre chez les scientifiques (34 % notes faibles vs 16 % en ALLS)</li>
+                    <li>Les littéraires pratiquent davantage les sorties classiques (théâtre, concerts, musées)</li>
+                </ul>
+            </div>
+            <div class="modal-cta-row">
+                <table style="width:100%;border-collapse:collapse;">
+                    <tr>
+                        <td style="padding:4px 6px 4px 0;">
+                            <a href="documents/Donnees_redresses.xlsx" class="modal-cta" style="width:100%;justify-content:center;">Données redressées (Excel) <span class="modal-cta-arrow">→</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:4px 6px 4px 0;">
+                            <a href="documents/Note_explicative_SAE.pdf" class="modal-cta" style="width:100%;justify-content:center;background:var(--accent2);">Note explicative (PDF) <span class="modal-cta-arrow">→</span></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:4px 0 0 0;">
+                            <a href="documents/Presentation_SAE_Canva.pdf" class="modal-cta" style="width:100%;justify-content:center;background:#6b3030;">Présentation Canva (PDF) <span class="modal-cta-arrow">→</span></a>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
